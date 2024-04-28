@@ -31,8 +31,6 @@ def search_papers():
                     by="Date", ascending=False)
                 st.write(similar_papers_sorted)
 
-from langchain_community.document_loaders import PyPDFLoader
-
 def upload_pdf():
     with st.form(key='upload_form'):
         uploaded_file = st.file_uploader(
@@ -40,16 +38,12 @@ def upload_pdf():
         upload_button = st.form_submit_button(label='Upload')
         if upload_button and uploaded_file:
             with st.spinner('Processing your PDF...'):
-                st.write(uploaded_file.name)
-                with open(uploaded_file.name, 'wb') as f:
-                    f.write(uploaded_file.getvalue())
-                data = extract_text(uploaded_file.name)
-                loader = PyPDFLoader(uploaded_file.name)
+                data = extract_text(uploaded_file.getvalue())
                 if data:
                     st.write(data)
                 else:
                     st.write(1)
-                    st.write(loader)
+                    st.write(data)
                     st.write(2)
                 if len(data) > 5:
                     embeddings = generate_embeddings(data)

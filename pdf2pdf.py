@@ -27,9 +27,11 @@ def query_pinecone(embedding, top_k=TOP_K):
         print(f"Error querying with embedding: {e}")
     return results
 
-def extract_text (FILE_PATH):
+def extract_text (res):
+    with open("temp_paper.pdf", "wb") as f:
+        f.write(res)
     try:
-        loader = PyMuPDFLoader(FILE_PATH)
+        loader = PyMuPDFLoader("temp_paper.pdf")
         data = loader.load()
         text = data[0].page_content 
     except Exception as e:
@@ -48,4 +50,7 @@ def extract_text (FILE_PATH):
         # get first 300 words by default.
         # abstract usually has a max limit of 250 words
         extracted_text = ' '.join(tokens)
+
+    # Clean up the temporary file
+    os.remove("temp_paper.pdf")
     return extracted_text
