@@ -31,6 +31,7 @@ def search_papers():
                     by="Date", ascending=False)
                 st.write(similar_papers_sorted)
 
+from langchain_community.document_loaders import PyMuPDFLoader
 
 def upload_pdf():
     with st.form(key='upload_form'):
@@ -43,11 +44,13 @@ def upload_pdf():
                 with open(uploaded_file.name, 'wb') as f:
                     f.write(uploaded_file.getvalue())
                 data = extract_text(uploaded_file.name)
+                loader = PyMuPDFLoader(uploaded_file.name)
                 if data:
                     st.write(data)
                 else:
-                    st.write(data)
-                    st.write(os.listdir())
+                    st.write(1)
+                    st.write(loader)
+                    st.write(2)
                 if len(data) > 5:
                     embeddings = generate_embeddings(data)
                     query_results = query_pinecone(embeddings)
