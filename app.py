@@ -39,26 +39,26 @@ def upload_pdf():
         upload_button = st.form_submit_button(label='Upload')
         if upload_button and uploaded_file:
             with st.spinner('Processing your PDF...'):
-                os.write(1,b'Something was executed.\n')
-                # os.write(1, uploaded_file.getvalue())
-                print(2222222222222222, uploaded_file.read())
-                data = extract_text(uploaded_file.getvalue())
-                # if len(data) > 5:
-                #     embeddings = generate_embeddings(data)
-                #     query_results = query_pinecone(embeddings)
-                #     query_matches = query_results[0]["matches"]
+                file_path = os.path.join("PDFs", uploaded_file.name)
+                with open(file_path, 'wb') as f:
+                    f.write(uploaded_file.getvalue())
+                data = extract_text("PDFs/" + uploaded_file.name)
+                if len(data) > 5:
+                    embeddings = generate_embeddings(data)
+                    query_results = query_pinecone(embeddings)
+                    query_matches = query_results[0]["matches"]
 
-                #     similar_papers = {"DOI": [], "Title": [], "Date": []}
-                #     for match in query_matches:
-                #         similar_papers["DOI"].append(match["metadata"]["doi"])
-                #         similar_papers["Title"].append(
-                #             match["metadata"]["title"])
-                #         similar_papers["Date"].append(
-                #             match["metadata"]["latest_creation_date"])
-                #     similar_papers = pd.DataFrame(similar_papers)
-                #     similar_papers_sorted = similar_papers.sort_values(
-                #         by="Date", ascending=False)
-                #     st.write(similar_papers_sorted)
+                    similar_papers = {"DOI": [], "Title": [], "Date": []}
+                    for match in query_matches:
+                        similar_papers["DOI"].append(match["metadata"]["doi"])
+                        similar_papers["Title"].append(
+                            match["metadata"]["title"])
+                        similar_papers["Date"].append(
+                            match["metadata"]["latest_creation_date"])
+                    similar_papers = pd.DataFrame(similar_papers)
+                    similar_papers_sorted = similar_papers.sort_values(
+                        by="Date", ascending=False)
+                    st.write(similar_papers_sorted)
 
 
 def update_knowledge_base():
