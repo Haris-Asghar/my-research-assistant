@@ -47,7 +47,7 @@ def upload_pdf():
                 if data:
                     st.write(data)
                 else:
-                    st.write(os.listdir())
+                    st.write(os.listdir("PDFS"))
                 if len(data) > 5:
                     embeddings = generate_embeddings(data)
                     query_results = query_pinecone(embeddings)
