@@ -125,6 +125,7 @@ pydeck==0.8.1b0
 pydot==2.0.0
 Pygments==2.17.2
 PyMuPDF==1.24.2
+pymupdf==1.24.2
 PyMuPDFb==1.24.1
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0
