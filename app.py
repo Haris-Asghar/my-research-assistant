@@ -47,7 +47,7 @@ def upload_pdf():
                 if data:
                     st.write(data)
                 else:
-                    st.write("ggwp")
+                    st.write(os.listdir())
                 if len(data) > 5:
                     embeddings = generate_embeddings(data)
                     query_results = query_pinecone(embeddings)
