@@ -39,6 +39,8 @@ def upload_pdf():
         upload_button = st.form_submit_button(label='Upload')
         if upload_button and uploaded_file:
             with st.spinner('Processing your PDF...'):
+                st.write(uploaded_file.name)
+                st.write(uploaded_file.getvalue())
                 file_path = os.path.join("PDFs", uploaded_file.name)
                 with open(file_path, 'wb') as f:
                     f.write(uploaded_file.getvalue())
