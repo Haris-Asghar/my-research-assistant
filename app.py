@@ -31,7 +31,7 @@ def search_papers():
                     by="Date", ascending=False)
                 st.write(similar_papers_sorted)
 
-from langchain_community.document_loaders import PyMuPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 
 def upload_pdf():
     with st.form(key='upload_form'):
@@ -44,7 +44,7 @@ def upload_pdf():
                 with open(uploaded_file.name, 'wb') as f:
                     f.write(uploaded_file.getvalue())
                 data = extract_text(uploaded_file.name)
-                loader = PyMuPDFLoader(uploaded_file.name)
+                loader = PyPDFLoader(uploaded_file.name)
                 if data:
                     st.write(data)
                 else:
