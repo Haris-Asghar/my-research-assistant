@@ -39,10 +39,7 @@ def upload_pdf():
         upload_button = st.form_submit_button(label='Upload')
         if upload_button and uploaded_file:
             with st.spinner('Processing your PDF...'):
-                file_path = os.path.join("PDFs", uploaded_file.name)
-                with open(file_path, 'wb') as f:
-                    f.write(uploaded_file.getvalue())
-                data = extract_text("PDFs/" + uploaded_file.name)
+                data = extract_text(uploaded_file.getvalue())
                 if len(data) > 5:
                     embeddings = generate_embeddings(data)
                     query_results = query_pinecone(embeddings)
