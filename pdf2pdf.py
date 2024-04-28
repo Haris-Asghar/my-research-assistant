@@ -27,8 +27,9 @@ def query_pinecone(embedding, top_k=TOP_K):
         print(f"Error querying with embedding: {e}")
     return results
 
-def extract_text (loader):
+def extract_text (FILE_PATH):
     try:
+        loader = PyMuPDFLoader(FILE_PATH)
         data = loader.load()
         text = data[0].page_content 
     except Exception as e:
