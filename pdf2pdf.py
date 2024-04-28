@@ -37,7 +37,7 @@ def extract_text (res):
     except Exception as e:
         print("ERROR: Could not load PDF")
         print(e)
-        return ""
+        return "PDF Loaded"
     start_index = text.find('Abstract')
     end_index = text.find('Introduction')
     extracted_text = ""

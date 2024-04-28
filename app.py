@@ -39,17 +39,10 @@ def upload_pdf():
         if upload_button and uploaded_file:
             with st.spinner('Processing your PDF...'):
                 data = extract_text(uploaded_file.getvalue())
-                if data:
-                    st.write(data)
-                else:
-                    st.write(1)
-                    st.write(data)
-                    st.write(2)
                 if len(data) > 5:
                     embeddings = generate_embeddings(data)
                     query_results = query_pinecone(embeddings)
                     query_matches = query_results[0]["matches"]
-
                     similar_papers = {"DOI": [], "Title": [], "Date": []}
                     for match in query_matches:
                         similar_papers["DOI"].append(match["metadata"]["doi"])
