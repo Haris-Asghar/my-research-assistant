@@ -6,7 +6,7 @@ import os
 import pandas as pd
 from chatui import llm_chat
 from chatpdf import add_paper_to_kb, clear_kb
-from pdf2pdf import extract_text, generate_embeddings, query_pinecone
+from pdf2pdf import extract_text, generate_embeddings, query_pinecone, prompt_to_query
 
 
 def search_papers():
@@ -16,6 +16,7 @@ def search_papers():
         search_button = st.form_submit_button(label='Search')
         if search_button:
             with st.spinner('Searching for relevant research papers...'):
+                search_query = prompt_to_query(search_query)
                 embeddings = generate_embeddings(search_query)
                 query_results = query_pinecone(embeddings)
                 query_matches = query_results[0]["matches"]
@@ -31,6 +32,7 @@ def search_papers():
                     by="Date", ascending=False)
                 st.write(similar_papers_sorted)
 
+
 def upload_pdf():
     with st.form(key='upload_form'):
         uploaded_file = st.file_uploader(
@@ -43,6 +45,7 @@ def upload_pdf():
                     embeddings = generate_embeddings(data)
                     query_results = query_pinecone(embeddings)
                     query_matches = query_results[0]["matches"]
+
                     similar_papers = {"DOI": [], "Title": [], "Date": []}
                     for match in query_matches:
                         similar_papers["DOI"].append(match["metadata"]["doi"])
